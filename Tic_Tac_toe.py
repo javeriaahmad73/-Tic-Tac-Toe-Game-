@@ -49,7 +49,7 @@ class TicTacToeGame:
         return rows + columns + [first_diagonal, second_diagonal]
 
     def toggle_player(self):
-        """Return a toggled player."""
+        #Return a toggled player.
         self.current_player = next(self._players)
 
     def is_valid_move(self, move):
