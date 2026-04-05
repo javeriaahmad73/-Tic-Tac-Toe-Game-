@@ -14,7 +14,7 @@ class Move(NamedTuple):
     col: int
     label: str = ""
 
-BOARD_SIZE = 3
+BOARD_SIZE = 3   #3x3 grid
 DEFAULT_PLAYERS = (
     Player(label="X", color="blue"),
     Player(label="O", color="green"),
@@ -31,14 +31,14 @@ class TicTacToeGame:
         self._winning_combos = []
         self._setup_board()
 
-    def _setup_board(self):
+    def _setup_board(self):   # create empty board with move objects
         self._current_moves = [
             [Move(row, col) for col in range(self.board_size)]
             for row in range(self.board_size)
         ]
         self._winning_combos = self._get_winning_combos()
 
-    def _get_winning_combos(self):
+    def _get_winning_combos(self):    #generates rows,columns,diagonals
         rows = [
             [(move.row, move.col) for move in row]
             for row in self._current_moves
@@ -48,18 +48,18 @@ class TicTacToeGame:
         second_diagonal = [col[j] for j, col in enumerate(reversed(columns))]
         return rows + columns + [first_diagonal, second_diagonal]
 
-    def toggle_player(self):
+    def toggle_player(self): # switch players(X and O)
         #Return a toggled player.
         self.current_player = next(self._players)
 
-    def is_valid_move(self, move):
+    def is_valid_move(self, move):     # check if cell is empty or no winner yet
         #Return True if move is valid, and False otherwise.
         row, col = move.row, move.col
         move_was_not_played = self._current_moves[row][col].label == ""
         no_winner = not self._has_winner
         return no_winner and move_was_not_played
 
-    def process_move(self, move):
+    def process_move(self, move):   #
         #Process the current move and check if it's a win.
         row, col = move.row, move.col
         self._current_moves[row][col] = move
@@ -71,7 +71,7 @@ class TicTacToeGame:
                 self.winner_combo = combo
                 break
 
-    def has_winner(self):
+    def has_winner(self):          #returns true if someone won
         #Return True if the game has a winner, and False otherwise.
         return self._has_winner
 
